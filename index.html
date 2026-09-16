@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Meta SEO & OpenGraph -->
+    <title>FNG Beauty | Votre parfum. Votre signature.</title>
+    <meta name="description" content="Découvrez la collection exclusive de parfums FNG Beauty. Maison de haute parfumerie par FNG Holdings. Livraison à Dakar et dans toutes les régions du Sénégal.">
+    <meta name="keywords" content="FNG Beauty, FNG Holdings, Parfum Sénégal, Parfum Dakar, Khamrah, Private Goldens, Nova, Sarq Oliver">
+    <meta property="og:title" content="FNG Beauty | Votre parfum. Votre signature.">
+    <meta property="og:description" content="Maison de parfumerie moderne et professionnelle. Collection exclusive signée FNG Holdings.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://boutique-demo-steel.vercel.app/">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1200&q=80">
+
+    <!-- Styles & Typography -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        fng: {
+                            black: '#0a0a0a',
+                            dark: '#121212',
+                            card: '#171717',
+                            border: '#262626',
+                            gold: '#c5a880',
+                            goldlight: '#e5d3b3',
+                            ivory: '#f5f5f0',
+                            muted: '#a3a3a3'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Cinzel', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0a0a0a; color: #f5f5f0; }
+        .font-serif { font-family: 'Cinzel', serif; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .glass-panel { background: rgba(18, 18, 18, 0.92); backdrop-filter: blur(12px); }
+    </style>
+
+    <!-- Schema.org Data Structurée -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "PerfumeStore",
+      "name": "FNG Beauty",
+      "image": "https://images.unsplash.com/photo-1594035910387-fea47794261f",
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "FNG Holdings"
+      },
+      "telephone": "+221756329985",
+      "priceRange": "2000 FCFA - 6000 FCFA",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "SN",
+        "addressLocality": "Dakar"
+      }
+    }
+    </script>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-fng-gold selection:text-fng-black">
+
+    <!-- BANNIÈRE ANNONCE -->
+    <div class="bg-fng-card border-b border-fng-border text-[11px] font-medium tracking-widest text-fng-gold py-2 text-center uppercase">
+        <i class="fa-solid fa-truck-fast mr-2"></i> Maison FNG Beauty • Livraison à Dakar & dans toutes les régions
+    </div>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-fng-border/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+            
+            <!-- Logo -->
+            <a href="#" onclick="switchTab('catalog')" class="flex flex-col">
+                <span class="font-serif text-xl sm:text-2xl font-bold tracking-widest text-fng-ivory">FNG BEAUTY</span>
+                <span class="text-[9px] tracking-[0.3em] text-fng-gold uppercase">Votre parfum. Votre signature.</span>
+            </a>
+
+            <!-- Navigation Bureau -->
+            <nav class="hidden md:flex items-center gap-8 text-xs font-medium tracking-widest uppercase text-fng-muted">
+                <button onclick="switchTab('catalog')" class="hover:text-fng-gold transition">Boutique</button>
+                <button onclick="switchTab('favorites')" class="hover:text-fng-gold transition">Favoris (<span class="fav-count">0</span>)</button>
+                <button onclick="switchTab('about')" class="hover:text-fng-gold transition">À propos</button>
+                <button onclick="switchTab('profile')" class="hover:text-fng-gold transition">Mon Profil</button>
+            </nav>
+
+            <!-- Actions Header -->
+            <div class="flex items-center gap-4">
+                <!-- Recherche -->
+                <button onclick="toggleSearchModal()" class="p-2 text-fng-muted hover:text-fng-gold transition" aria-label="Recherche">
+                    <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                </button>
+                <!-- Favoris Mobile -->
+                <button onclick="switchTab('favorites')" class="md:hidden p-2 text-fng-muted hover:text-fng-gold transition relative">
+                    <i class="fa-solid fa-heart text-lg"></i>
+                    <span class="fav-count absolute -top-1 -right-1 bg-fng-gold text-fng-black text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                </button>
+                <!-- Panier -->
+                <button onclick="toggleCart()" class="p-2 text-fng-muted hover:text-fng-gold transition relative">
+                    <i class="fa-solid fa-bag-shopping text-xl"></i>
+                    <span id="cartBadge" class="hidden absolute -top-1 -right-1 bg-fng-gold text-fng-black text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTAINER PRINCIPAL -->
+    <div id="mainContainer" class="flex-1">
+
+        <!-- SECTION HERO -->
+        <section id="heroSection" class="relative py-16 sm:py-24 border-b border-fng-border/40 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center sm:text-left flex flex-col md:flex-row items-center justify-between gap-12">
+                <div class="space-y-6 max-w-2xl">
+                    <span class="text-xs font-semibold uppercase tracking-[0.25em] text-fng-gold">Haute Parfumerie • FNG Holdings</span>
+                    <h1 class="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal leading-tight text-fng-ivory">
+                        L'art du parfum. <br><span class="italic font-light text-fng-goldlight">L'essence de votre distinction.</span>
+                    </h1>
+                    <p class="text-fng-muted text-sm sm:text-base leading-relaxed font-light">
+                        Chaque fragrance est une empreinte olfactive unique. Découvrez la collection FNG Beauty et affirmez votre signature avec nos essences d'exception.
+                    </p>
+                    <div class="pt-4 flex flex-col sm:flex-row gap-4 justify-center sm:justify-start">
+                        <a href="#catalog" class="px-8 py-3.5 bg-fng-gold text-fng-black font-semibold text-xs uppercase tracking-widest hover:bg-fng-goldlight transition text-center">
+                            Découvrir la Collection
+                        </a>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 max-w-md">
+                    <div class="relative p-2 border border-fng-border bg-fng-card">
+                        <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=80" alt="FNG Beauty Collection" class="w-full h-80 object-cover filter grayscale contrast-125 hover:grayscale-0 transition duration-700">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATALOGUE PRODUITS -->
+        <main id="catalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-12 border-b border-fng-border/60 pb-6 gap-4">
+                <div>
+                    <span class="text-[10px] uppercase tracking-[0.3em] text-fng-gold block mb-1">Sélection Exclusive</span>
+                    <h2 class="font-serif text-2xl sm:text-3xl font-normal text-fng-ivory">Nos Fragrances</h2>
+                </div>
+                <span class="text-xs text-fng-muted font-light">6 créations parfumées</span>
+            </div>
+
+            <!-- Grille Produits -->
+            <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Dynamique via JavaScript -->
+            </div>
+        </main>
+
+        <!-- PAGE / ONGLET : FAVORIS -->
+        <section id="tab-favorites" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <h2 class="font-serif text-2xl sm:text-3xl font-normal text-fng-ivory mb-8 border-b border-fng-border pb-4">Vos Fragrances Favorites</h2>
+            <div id="favoritesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Injecté via JS -->
+            </div>
+        </section>
+
+        <!-- PAGE / ONGLET : À PROPOS / CONFIANCE -->
+        <section id="tab-about" class="hidden max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
+            <div class="text-center space-y-4">
+                <span class="text-xs uppercase tracking-[0.3em] text-fng-gold">Maison FNG Holdings</span>
+                <h2 class="font-serif text-3xl font-normal text-fng-ivory">L'Excellence Olfactive</h2>
+                <p class="text-fng-muted text-sm leading-relaxed font-light">
+                    FNG Beauty s'impose comme la référence contemporaine de la parfumerie de caractère. Filiale de FNG Holdings, notre maison sélectionne rigoureusement des essences intenses conçues pour durer et marquer les esprits.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 border-t border-fng-border">
+                <div class="bg-fng-card p-6 border border-fng-border/60 text-center space-y-2">
+                    <i class="fa-solid fa-gem text-fng-gold text-xl mb-2"></i>
+                    <h3 class="font-serif text-sm text-fng-ivory">Qualité Supérieure</h3>
+                    <p class="text-fng-muted text-xs leading-relaxed">Concentrations optimales pour un sillage authentique et durable.</p>
+                </div>
+                <div class="bg-fng-card p-6 border border-fng-border/60 text-center space-y-2">
+                    <i class="fa-solid fa-truck-long text-fng-gold text-xl mb-2"></i>
+                    <h3 class="font-serif text-sm text-fng-ivory">Livraison Rapide</h3>
+                    <p class="text-fng-muted text-xs leading-relaxed">Acheminement sécurisé sur Dakar et expéditions en régions.</p>
+                </div>
+                <div class="bg-fng-card p-6 border border-fng-border/60 text-center space-y-2">
+                    <i class="fa-solid fa-headset text-fng-gold text-xl mb-2"></i>
+                    <h3 class="font-serif text-sm text-fng-ivory">Service Client Direct</h3>
+                    <p class="text-fng-muted text-xs leading-relaxed">Assistance et prise de commande personnalisée sur WhatsApp.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE / ONGLET : PROFIL UTILISATEUR -->
+        <section id="tab-profile" class="hidden max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <h2 class="font-serif text-2xl font-normal text-fng-ivory mb-8 border-b border-fng-border pb-4">Votre Profil Client</h2>
+            <form id="profileForm" onsubmit="saveProfile(event)" class="space-y-6 bg-fng-card p-6 border border-fng-border">
+                <div class="flex items-center gap-6 pb-6 border-b border-fng-border">
+                    <div class="relative w-20 h-20 rounded-full overflow-hidden bg-fng-dark border border-fng-gold/40 flex items-center justify-center">
+                        <img id="profileImagePreview" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="Profil" class="w-full h-full object-cover">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs uppercase tracking-widest text-fng-gold cursor-pointer hover:underline">
+                            Changer la photo
+                            <input type="file" id="profileImageInput" accept="image/*" onchange="updateProfileImage(event)" class="hidden">
+                        </label>
+                        <p class="text-[10px] text-fng-muted">Format JPG, PNG. Max 2Mo.</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-fng-muted mb-2">Nom complet</label>
+                        <input type="text" id="profileName" required class="w-full bg-fng-dark border border-fng-border px-4 py-2.5 text-xs text-fng-ivory focus:border-fng-gold focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-fng-muted mb-2">Téléphone</label>
+                        <input type="tel" id="profilePhone" required class="w-full bg-fng-dark border border-fng-border px-4 py-2.5 text-xs text-fng-ivory focus:border-fng-gold focus:outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-fng-muted mb-2">Adresse de livraison</label>
+                    <input type="text" id="profileAddress" required class="w-full bg-fng-dark border border-fng-border px-4 py-2.5 text-xs text-fng-ivory focus:border-fng-gold focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-fng-muted mb-2">Ville / Région</label>
+                    <input type="text" id="profileCity" required class="w-full bg-fng-dark border border-fng-border px-4 py-2.5 text-xs text-fng-ivory focus:border-fng-gold focus:outline-none">
+                </div>
+                <button type="submit" class="w-full py-3 bg-fng-gold text-fng-black font-semibold text-xs uppercase tracking-widest hover:bg-fng-goldlight transition">
+                    Enregistrer les coordonnées
+                </button>
+            </form>
+        </section>
+
+    </div>
+
+    <!-- MODAL RECHERCHE INSTANTANÉE -->
+    <div id="searchModal" class="fixed inset-0 z-50 glass-panel hidden flex flex-col p-4 sm:p-8">
+        <div class="max-w-3xl mx-auto w-full space-y-6">
+            <div class="flex items-center justify-between border-b border-fng-border pb-4">
+                <input type="text" id="searchInput" oninput="liveSearch()" placeholder="Rechercher une fragrance..." class="bg-transparent text-xl font-serif text-fng-ivory placeholder-fng-muted focus:outline-none w-full">
+                <button onclick="toggleSearchModal()" class="text-fng-muted hover:text-fng-ivory"><i class="fa-solid fa-xmark text-2xl"></i></button>
+            </div>
+            <div id="searchResults" class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[70vh] overflow-y-auto">
+                <!-- Résultats de recherche -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL FICHE PRODUIT DETAILLEE -->
+    <div id="productDetailModal" class="fixed inset-0 z-50 glass-panel hidden overflow-y-auto p-4 sm:p-8">
+        <div class="max-w-4xl mx-auto bg-fng-card border border-fng-border my-8 p-6 sm:p-10 relative">
+            <button onclick="closeProductDetail()" class="absolute top-4 right-4 text-fng-muted hover:text-fng-ivory p-2"><i class="fa-solid fa-xmark text-2xl"></i></button>
+            <div id="productDetailContent" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Injecté dynamiquement via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE-OVER PANIER -->
+    <div id="cartModal" class="fixed inset-0 z-50 invisible transition-all duration-300">
+        <div onclick="toggleCart()" class="absolute inset-0 bg-black/80 opacity-0 transition-opacity duration-300" id="cartBackdrop"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-fng-dark border-l border-fng-border shadow-2xl flex flex-col translate-x-full transition-transform duration-300" id="cartPanel">
+            
+            <div class="p-6 border-b border-fng-border flex items-center justify-between">
+                <h3 class="font-serif text-lg text-fng-ivory">Votre Panier</h3>
+                <button onclick="toggleCart()" class="text-fng-muted hover:text-fng-ivory"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+
+            <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-6 space-y-4">
+                <!-- Produits du panier -->
+            </div>
+
+            <div class="p-6 border-t border-fng-border bg-fng-card space-y-4">
+                <div class="flex justify-between text-sm">
+                    <span class="text-fng-muted uppercase tracking-wider">Total</span>
+                    <span id="cartTotal" class="font-serif font-bold text-fng-gold text-base">0 FCFA</span>
+                </div>
+                
+                <p class="text-[10px] text-fng-muted leading-tight">La commande sera transmise directement à notre équipe via WhatsApp avec vos coordonnées pré-remplies.</p>
+
+                <button onclick="processWhatsAppCheckout()" class="w-full py-4 bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2 transition">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Commander sur WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER PREMIUM -->
+    <footer class="bg-fng-dark border-t border-fng-border mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                
+                <!-- Branding -->
+                <div class="space-y-4">
+                    <span class="font-serif text-xl font-bold tracking-widest text-fng-ivory block">FNG BEAUTY</span>
+                    <p class="text-xs text-fng-muted leading-relaxed font-light">
+                        Maison de haute parfumerie moderne. Une signature olfactive exclusive conçue par FNG Holdings.
+                    </p>
+                </div>
+
+                <!-- Navigation -->
+                <div class="space-y-3">
+                    <h4 class="text-xs font-semibold uppercase tracking-widest text-fng-gold">Navigation</h4>
+                    <ul class="space-y-2 text-xs text-fng-muted">
+                        <li><button onclick="switchTab('catalog')" class="hover:text-fng-ivory transition">Boutique</button></li>
+                        <li><button onclick="switchTab('about')" class="hover:text-fng-ivory transition">À propos de FNG Holdings</button></li>
+                        <li><button onclick="switchTab('profile')" class="hover:text-fng-ivory transition">Espace Client</button></li>
+                    </ul>
+                </div>
+
+                <!-- Contact & WhatsApp -->
+                <div class="space-y-3">
+                    <h4 class="text-xs font-semibold uppercase tracking-widest text-fng-gold">Contact Officiel</h4>
+                    <p class="text-xs text-fng-muted"><i class="fa-solid fa-phone mr-2 text-fng-gold"></i> +221 75 632 99 85</p>
+                    <p class="text-xs text-fng-muted"><i class="fa-solid fa-location-dot mr-2 text-fng-gold"></i> Dakar, Sénégal</p>
+                </div>
+
+                <!-- Réseaux Sociaux -->
+                <div class="space-y-3">
+                    <h4 class="text-xs font-semibold uppercase tracking-widest text-fng-gold">Réseaux Officiels</h4>
+                    <div class="flex gap-4 text-fng-muted text-base">
+                        <a href="https://www.tiktok.com/@fng_holdings" target="_blank" rel="noopener" class="hover:text-fng-gold transition" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="https://www.instagram.com/fng_holdings" target="_blank" rel="noopener" class="hover:text-fng-gold transition" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/share/19gk4x28Ns/" target="_blank" rel="noopener" class="hover:text-fng-gold transition" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="border-t border-fng-border/60 pt-8 flex flex-col sm:flex-row justify-between items-center text-[11px] text-fng-muted gap-4">
+                <p>© 2026 FNG Beauty. Marque officielle de FNG Holdings. Tous droits réservés.</p>
+                <p class="font-light">Design Luxe & Minimaliste</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BARRE DE NAVIGATION MOBILE BAS DE PAGE -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 glass-panel border-t border-fng-border z-40 flex justify-around py-3 text-fng-muted">
+        <button onclick="switchTab('catalog')" class="flex flex-col items-center gap-1 text-[10px] uppercase tracking-wider hover:text-fng-gold">
+            <i class="fa-solid fa-store text-base"></i> Boutique
+        </button>
+        <button onclick="switchTab('favorites')" class="flex flex-col items-center gap-1 text-[10px] uppercase tracking-wider hover:text-fng-gold">
+            <i class="fa-solid fa-heart text-base"></i> Favoris
+        </button>
+        <button onclick="toggleCart()" class="flex flex-col items-center gap-1 text-[10px] uppercase tracking-wider hover:text-fng-gold relative">
+            <i class="fa-solid fa-bag-shopping text-base"></i> Panier
+        </button>
+        <button onclick="switchTab('profile')" class="flex flex-col items-center gap-1 text-[10px] uppercase tracking-wider hover:text-fng-gold">
+            <i class="fa-solid fa-user text-base"></i> Profil
+        </button>
+    </div>
+
+    <!-- MOTEUR DE JAVASCRIPT EXCLUSIF -->
+    <script>
+        // DONNÉES PRODUITS STRICTEMENT CONFORMES
+        const products = [
+            {
+                id: "sarq-oliver",
+                name: "SARQ OLIVER",
+                price: 2500,
+                image: "https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?auto=format&fit=crop&w=600&q=80",
+                description: "Fragrance raffinée aux notes boisées et épicées légères, idéale pour le quotidien."
+            },
+            {
+                id: "dg",
+                name: "DG",
+                price: 2000,
+                image: "https://images.unsplash.com/photo-1519669011783-4eaa95fa1b7d?auto=format&fit=crop&w=600&q=80",
+                description: "Senteur fraîche, dynamique et captivante apportant une présence subtile."
+            },
+            {
+                id: "smart",
+                name: "SMART",
+                price: 2000,
+                image: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=600&q=80",
+                description: "Format compact élégant, idéal pour conserver votre signature olfactive partout."
+            },
+            {
+                id: "kamrah",
+                name: "KAMRAH",
+                price: 2000,
+                image: "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=600&q=80",
+                description: "Essence ambrée et gourmande d'une grande persistance pour les moments privilégiés."
+            },
+            {
+                id: "nova",
+                name: "NOVA",
+                price: 4000,
+                image: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=600&q=80",
+                description: "Composition masculine intense à la personnalité affirmation forte."
+            },
+            {
+                id: "private-goldens",
+                name: "PRIVATE GOLDENS",
+                price: 6000,
+                image: "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=600&q=80",
+                description: "Le sommet de la gamme FNG Beauty. Parfum d'exception riche et prestigieux."
+            }
+        ];
+
+        // ÉTAT DE L'APPLICATION
+        let cart = JSON.parse(localStorage.getItem('fng_cart')) || [];
+        let favorites = JSON.parse(localStorage.getItem('fng_favorites')) || [];
+        let userProfile = JSON.parse(localStorage.getItem('fng_profile')) || {
+            name: '',
+            phone: '',
+            address: '',
+            city: '',
+            image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'
+        };
+
+        // RENDU DU CATALOGUE
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+
+            products.forEach(p => {
+                const isFav = favorites.includes(p.id);
+                grid.innerHTML += `
+                    <div class="bg-fng-card border border-fng-border flex flex-col justify-between group">
+                        <div class="relative overflow-hidden bg-fng-dark">
+                            <img src="${p.image}" alt="${p.name}" loading="lazy" class="w-full h-72 object-cover filter contrast-105 group-hover:scale-105 transition duration-500">
+                            <button onclick="toggleFavorite('${p.id}')" class="absolute top-4 right-4 p-2.5 bg-fng-black/60 text-fng-ivory hover:text-fng-gold transition rounded-full" aria-label="Favoris">
+                                <i class="fa-${isFav ? 'solid text-fng-gold' : 'regular'} fa-heart text-sm"></i>
+                            </button>
+                        </div>
+                        <div class="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                            <div>
+                                <span class="text-[9px] uppercase tracking-[0.2em] text-fng-gold block mb-1">Maison FNG</span>
+                                <h3 class="font-serif text-lg font-normal text-fng-ivory">${p.name}</h3>
+                                <p class="text-xs text-fng-muted mt-2 font-light leading-relaxed line-clamp-2">${p.description}</p>
+                            </div>
+                            <div class="pt-4 border-t border-fng-border/60 flex items-center justify-between">
+                                <span class="font-serif text-base text-fng-gold font-semibold">${p.price.toLocaleString()} FCFA</span>
+                                <div class="flex gap-2">
+                                    <button onclick="openProductDetail('${p.id}')" class="px-3 py-2 border border-fng-border text-fng-muted hover:text-fng-ivory text-xs transition" aria-label="Voir le produit">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+                                    <button onclick="addToCart('${p.id}')" class="px-4 py-2 bg-fng-gold text-fng-black font-semibold text-xs uppercase tracking-wider hover:bg-fng-goldlight transition">
+                                        Ajouter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            updateFavBadges();
+        }
+
+        // GESTION DU PANIER
+        function addToCart(productId, quantity = 1) {
+            const product = products.find(p => p.id === productId);
+            const existing = cart.find(item => item.id === productId);
+
+            if (existing) {
+                existing.quantity += quantity;
+            } else {
+                cart.push({ ...product, quantity: quantity });
+            }
+
+            saveCart();
+            updateCartUI();
+            toggleCart(true);
+        }
+
+        function updateQuantity(productId, delta) {
+            const item = cart.find(i => i.id === productId);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => i.id !== productId);
+                }
+            }
+            saveCart();
+            updateCartUI();
+        }
+
+        function saveCart() {
+            localStorage.setItem('fng_cart', JSON.stringify(cart));
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cartItemsContainer');
+            const totalEl = document.getElementById('cartTotal');
+            const badge = document.getElementById('cartBadge');
+            
+            container.innerHTML = '';
+            let total = 0;
+            let count = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = `<p class="text-center text-xs text-fng-muted py-12">Votre panier est actuellement vide.</p>`;
+            } else {
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+                    count += item.quantity;
+
+                    container.innerHTML += `
+                        <div class="flex gap-4 p-3 bg-fng-card border border-fng-border">
+                            <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover bg-fng-dark">
+                            <div class="flex-1 flex flex-col justify-between">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-serif text-xs text-fng-ivory font-bold">${item.name}</h4>
+                                    <button onclick="removeFromCart('${item.id}')" class="text-fng-muted hover:text-red-400 text-xs"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                                <div class="flex justify-between items-center mt-2">
+                                    <div class="flex items-center gap-2 border border-fng-border px-2 py-0.5">
+                                        <button onclick="updateQuantity('${item.id}', -1)" class="text-xs text-fng-muted hover:text-fng-ivory">-</button>
+                                        <span class="text-xs text-fng-ivory font-medium">${item.quantity}</span>
+                                        <button onclick="updateQuantity('${item.id}', 1)" class="text-xs text-fng-muted hover:text-fng-ivory">+</button>
+                                    </div>
+                                    <span class="text-xs text-fng-gold font-semibold">${itemTotal.toLocaleString()} FCFA</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            totalEl.innerText = `${total.toLocaleString()} FCFA`;
+            if (count > 0) {
+                badge.innerText = count;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.id !== id);
+            saveCart();
+            updateCartUI();
+        }
+
+        function toggleCart(forceOpen = false) {
+            const modal = document.getElementById('cartModal');
+            const backdrop = document.getElementById('cartBackdrop');
+            const panel = document.getElementById('cartPanel');
+
+            if (forceOpen || modal.classList.contains('invisible')) {
+                modal.classList.remove('invisible');
+                setTimeout(() => {
+                    backdrop.classList.remove('opacity-0');
+                    panel.classList.remove('translate-x-full');
+                }, 10);
+            } else {
+                backdrop.classList.add('opacity-0');
+                panel.classList.add('translate-x-full');
+                setTimeout(() => modal.classList.add('invisible'), 300);
+            }
+        }
+
+        // COMMANDE WHATSAPP AUTOMATISÉE
+        function processWhatsAppCheckout() {
+            if (cart.length === 0) return alert('Votre panier est vide.');
+
+            let message = "Bonjour *FNG Beauty*,\nJe souhaite valider la commande suivante :\n\n";
+            let total = 0;
+
+            cart.forEach(item => {
+                const sub = item.price * item.quantity;
+                total += sub;
+                message += `• *${item.name}* (Quantité: ${item.quantity}) — ${sub.toLocaleString()} FCFA\n`;
+            });
+
+            message += `\n*Total Général : ${total.toLocaleString()} FCFA*\n\n`;
+            message += "*Informations de Livraison :*\n";
+            message += `• Nom : ${userProfile.name || 'Non renseigné'}\n`;
+            message += `• Téléphone : ${userProfile.phone || 'Non renseigné'}\n`;
+            message += `• Adresse : ${userProfile.address || 'Non renseignée'}\n`;
+            message += `• Ville : ${userProfile.city || 'Dakar'}\n`;
+
+            const phone = "221756329985";
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        // GESTION DES FAVORIS
+        function toggleFavorite(id) {
+            if (favorites.includes(id)) {
+                favorites = favorites.filter(favId => favId !== id);
+            } else {
+                favorites.push(id);
+            }
+            localStorage.setItem('fng_favorites', JSON.stringify(favorites));
+            renderProducts();
+            renderFavorites();
+        }
+
+        function updateFavBadges() {
+            document.querySelectorAll('.fav-count').forEach(el => el.innerText = favorites.length);
+        }
+
+        function renderFavorites() {
+            const grid = document.getElementById('favoritesGrid');
+            grid.innerHTML = '';
+
+            const favProducts = products.filter(p => favorites.includes(p.id));
+
+            if (favProducts.length === 0) {
+                grid.innerHTML = `<p class="col-span-full text-center text-xs text-fng-muted py-12">Aucun parfum enregistré dans vos favoris.</p>`;
+                return;
+            }
+
+            favProducts.forEach(p => {
+                grid.innerHTML += `
+                    <div class="bg-fng-card border border-fng-border p-4 flex gap-4 items-center">
+                        <img src="${p.image}" alt="${p.name}" class="w-20 h-20 object-cover bg-fng-dark">
+                        <div class="flex-1">
+                            <h4 class="font-serif text-sm text-fng-ivory">${p.name}</h4>
+                            <p class="text-xs text-fng-gold font-semibold mt-1">${p.price.toLocaleString()} FCFA</p>
+                            <div class="flex gap-2 mt-3">
+                                <button onclick="addToCart('${p.id}')" class="px-3 py-1 bg-fng-gold text-fng-black text-[10px] uppercase font-bold">Ajouter</button>
+                                <button onclick="toggleFavorite('${p.id}')" class="px-2 py-1 text-fng-muted hover:text-red-400 text-xs"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // FICHE PRODUIT DETAILLEE
+        function openProductDetail(id) {
+            const p = products.find(item => item.id === id);
+            const content = document.getElementById('productDetailContent');
+            
+            content.innerHTML = `
+                <div class="bg-fng-dark border border-fng-border p-2">
+                    <img src="${p.image}" alt="${p.name}" class="w-full h-80 object-cover">
+                </div>
+                <div class="space-y-6 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <span class="text-[10px] uppercase tracking-[0.3em] text-fng-gold">Maison FNG Beauty</span>
+                        <h2 class="font-serif text-2xl text-fng-ivory">${p.name}</h2>
+                        <p class="text-xl font-serif text-fng-gold font-bold">${p.price.toLocaleString()} FCFA</p>
+                        <p class="text-xs text-fng-muted font-light leading-relaxed">${p.description}</p>
+                    </div>
+
+                    <div class="space-y-4 pt-6 border-t border-fng-border">
+                        <div class="flex items-center gap-4">
+                            <label class="text-xs text-fng-muted uppercase tracking-wider">Quantité</label>
+                            <input type="number" id="detailQuantity" value="1" min="1" class="w-16 bg-fng-dark border border-fng-border px-3 py-1.5 text-xs text-fng-ivory text-center">
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="addToCartFromDetail('${p.id}')" class="flex-1 py-3 bg-fng-gold text-fng-black font-semibold text-xs uppercase tracking-widest hover:bg-fng-goldlight transition">
+                                Ajouter au panier
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('productDetailModal').classList.remove('hidden');
+        }
+
+        function addToCartFromDetail(id) {
+            const qty = parseInt(document.getElementById('detailQuantity').value) || 1;
+            addToCart(id, qty);
+            closeProductDetail();
+        }
+
+        function closeProductDetail() {
+            document.getElementById('productDetailModal').classList.add('hidden');
+        }
+
+        // NAVIGATION ONGLETS
+        function switchTab(tabId) {
+            document.getElementById('heroSection').style.display = tabId === 'catalog' ? 'block' : 'none';
+            document.getElementById('catalog').style.display = tabId === 'catalog' ? 'block' : 'none';
+            document.getElementById('tab-favorites').classList.toggle('hidden', tabId !== 'favorites');
+            document.getElementById('tab-about').classList.toggle('hidden', tabId !== 'about');
+            document.getElementById('tab-profile').classList.toggle('hidden', tabId !== 'profile');
+
+            if (tabId === 'favorites') renderFavorites();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // RECHERCHE INSTANTANÉE
+        function toggleSearchModal() {
+            const modal = document.getElementById('searchModal');
+            modal.classList.toggle('hidden');
+            if (!modal.classList.contains('hidden')) {
+                document.getElementById('searchInput').focus();
+            }
+        }
+
+        function liveSearch() {
+            const q = document.getElementById('searchInput').value.toLowerCase();
+            const results = document.getElementById('searchResults');
+            results.innerHTML = '';
+
+            if (q.trim() === '') return;
+
+            const matches = products.filter(p => p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q));
+
+            matches.forEach(p => {
+                results.innerHTML += `
+                    <div onclick="openProductDetail('${p.id}'); toggleSearchModal();" class="p-3 bg-fng-card border border-fng-border flex gap-4 items-center cursor-pointer hover:border-fng-gold transition">
+                        <img src="${p.image}" alt="${p.name}" class="w-12 h-12 object-cover">
+                        <div>
+                            <h4 class="font-serif text-xs text-fng-ivory">${p.name}</h4>
+                            <p class="text-xs text-fng-gold mt-0.5">${p.price.toLocaleString()} FCFA</p>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // PROFIL ET PERSISTANCE
+        function loadProfile() {
+            document.getElementById('profileName').value = userProfile.name || '';
+            document.getElementById('profilePhone').value = userProfile.phone || '';
+            document.getElementById('profileAddress').value = userProfile.address || '';
+            document.getElementById('profileCity').value = userProfile.city || '';
+            if (userProfile.image) {
+                document.getElementById('profileImagePreview').src = userProfile.image;
+            }
+        }
+
+        function saveProfile(e) {
+            e.preventDefault();
+            userProfile.name = document.getElementById('profileName').value;
+            userProfile.phone = document.getElementById('profilePhone').value;
+            userProfile.address = document.getElementById('profileAddress').value;
+            userProfile.city = document.getElementById('profileCity').value;
+
+            localStorage.setItem('fng_profile', JSON.stringify(userProfile));
+            alert('Coordonnées enregistrées avec succès.');
+        }
+
+        function updateProfileImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    userProfile.image = e.target.result;
+                    document.getElementById('profileImagePreview').src = e.target.result;
+                    localStorage.setItem('fng_profile', JSON.stringify(userProfile));
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // INITIALISATION
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            updateCartUI();
+            loadProfile();
+        });
+    </script>
+</body>
+</html>
